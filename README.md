@@ -3,12 +3,13 @@
 
 # Docker Compose
 *All services are distributed among four docker containers. To make them work we need use the following command to start all processes:*
-
+```
 **$ docker compose-up -d**
 Creating whole_project_rabbitmq_1 ... done
 Creating whole_project_server_1   ... done
 Creating whole_project_worker_1   ... done
 Creating whole_project_archive_1  ... done
+```
 
 # Send request
 *To get a task (id 1-3 for now) from dictionary we'll use the HTTP's GET method:*
