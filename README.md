@@ -12,7 +12,7 @@ Creating whole_project_archive_1  ... done
 ```
 
 # Send request
-*To get a task (id 1-3 for now) from dictionary we'll use the HTTP's GET method:*
+*To get a task from dictionary we'll use the HTTP's GET method:*
 ```
 $ curl -i http://localhost:5000/myproject/v1.0/tasks/3
 
