@@ -21,7 +21,7 @@ whole_project_rabbitmq_1   docker-entrypoint.sh rabbi ...   Up (health: starting
                                                                                     0.0.0.0:5672->5672/tcp,:::5672->5672/tcp                                                                               
 whole_project_server_1     python3 server.py                Up                      0.0.0.0:5000->5000/tcp,:::5000->5000/tcp                                                                               
 whole_project_worker_1     python3 worker.py                Up
-
+```
 
 # Send request
 To get a task from dictionary we'll use the HTTP's GET method:
