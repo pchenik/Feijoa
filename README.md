@@ -24,7 +24,7 @@ whole_project_worker_1     python3 worker.py                Up
 ```
 
 # Send request
-To get a task from dictionary we'll use the HTTP's GET method:
+To get a task from the dictionary we'll use the HTTP's GET method:
 ```
 $ curl -i http://localhost:5000/myproject/v1.0/tasks/3
 
