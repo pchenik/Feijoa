@@ -2,7 +2,7 @@ import json
 import pika
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='rabbitmq'))
+    pika.ConnectionParameters(host='localhost'))
 
 channel = connection.channel()
 
@@ -12,13 +12,13 @@ tasks = [
     {
         'id': 1,
         'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
         'done': False
     },
     {
         'id': 2,
-        'title': u'Learn RabbitMQ',
-        'description': u'Need to find a good tutorial on the web',
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web',
         'done': False
     },
     {
@@ -31,14 +31,24 @@ tasks = [
 
 
 def on_request2(ch, method, props, body):
-    task_id = int(body)
-    print(" [.] task_id(%s)" % task_id)
+    get_req = json.loads(body)
 
-    task = list(filter(lambda t: t['id'] == task_id, tasks))
-    # if len(task) == 0:
-    #     response =
-    # else
-    response = {'task': task[0]}
+    response = {'status': 404, 'response': {}}
+
+    if get_req['methods'] == 'GET':
+        if get_req['id'] == None:
+            response = {'status': 'OK', 'response': tasks}
+        else:
+            task_id = get_req['id']
+            print(" [.] task_id(%s)" % task_id)
+            task = list(filter(lambda t: t['id'] == task_id, tasks))
+            response = {'status' : 'OK' if task else '404', 'response': task[0]}
+    elif get_req['methods'] == 'POST':
+        task = get_req['task']
+        task['id'] = len(tasks) + 1
+        tasks.append(task)
+        response = {'status': 'OK', 'response': 'Task {} has been successfully added'.format(task['id'])}
+        #print(response)
 
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
