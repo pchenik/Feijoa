@@ -48,15 +48,18 @@ def on_request(ch, method, props, body):
 
     while rpc_worker.response is None:
         rpc_worker.connection.process_data_events()
+    #print(rpc_worker.response)
+    #return rpc_worker.response
 
-    # по возвращению из archive - сделать какой-то вывод или действие над объектом???
+    # по возвращению из storage - сделать какой-то вывод или действие над объектом???
+
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id=props.correlation_id),
                      body=rpc_worker.response)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
-    print(" [x] Successfully transmitted to the archive and back to the server")
+    print(" [x] Successfully transmitted to the archive and back to the server.py")
 
 
 channel.basic_qos(prefetch_count=1)
